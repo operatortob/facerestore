@@ -71,12 +71,12 @@ def clone(url, folder, commithash=None):
 # clone required repositories
 def install_repositories():
     def d(name):
-        return os.path.join(os.path.dirname(__file__), 'sistinechapel', name)
-    log.info('Installing sistinechapel')
-    os.makedirs(os.path.join(os.path.dirname(__file__), 'sistinechapel'), exist_ok=True)
-    sistinechapel_repo = os.environ.get('SISTINE_REPO', "https://github.com/comfyanonymous/ComfyUI.git")
-    #sistinechapel_commit = os.environ.get('SISTINE_REPO_COMMIT_HASH', "5ab7f213bec2f816f9c5644becb32eb72c8ffb89")
-    clone(sistinechapel_repo, d('sistinechapel'))
+        return os.path.join(os.path.dirname(__file__), 'sistine', name)
+    log.info('Installing chapel')
+    os.makedirs(os.path.join(os.path.dirname(__file__), 'sistine'), exist_ok=True)
+    chapel_repo = os.environ.get('CHAPEL_REPO', "https://github.com/comfyanonymous/ComfyUI.git")
+    #sistinechapel_commit = os.environ.get('CHAPEL_REPO_REPO_COMMIT_HASH', "5ab7f213bec2f816f9c5644becb32eb72c8ffb89")
+    clone(chapel_repo, d('chapel'))
 
 # set environment variables controling the behavior of various libraries
 def set_environment():
