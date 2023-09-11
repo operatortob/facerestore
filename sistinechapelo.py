@@ -71,9 +71,9 @@ def clone(url, folder, commithash=None):
 # clone required repositories
 def install_repositories():
     def d(name):
-        return os.path.join(os.path.dirname(__file__), name)
+        return os.path.join(os.path.dirname(__file__), 'cmfy', name)
     log.info('Installing sistinechapel')
-    
+    os.makedirs(os.path.join(os.path.dirname(__file__), 'cmfy'), exist_ok=True)
     sistinechapel_repo = os.environ.get('SISTINE_CHAPEL_REPO', "https://github.com/comfyanonymous/ComfyUI.git")
     
     clone(sistinechapel_repo, d('sistinechapel'))
