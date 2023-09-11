@@ -9,7 +9,7 @@ class Dot(dict): # dot notation access to dictionary attributes
     __delattr__ = dict.__delitem__
 
 
-log = logging.getLogger("sistinechapel")
+log = logging.getLogger("sd")
 quick_allowed = True
 errors = 0
 opts = {}
@@ -71,15 +71,34 @@ def clone(url, folder, commithash=None):
 # clone required repositories
 def install_repositories():
     def d(name):
-        return os.path.join(os.path.dirname(__file__), 'cmfy', name)
+        return os.path.join(os.path.dirname(__file__), 'sistinechapel', name)
     log.info('Installing sistinechapel')
-    os.makedirs(os.path.join(os.path.dirname(__file__), 'cmfy'), exist_ok=True)
-    sistinechapel_repo = os.environ.get('SISTINE_CHAPEL_REPO', "https://github.com/comfyanonymous/ComfyUI.git")
-    
+    os.makedirs(os.path.join(os.path.dirname(__file__), 'sistinechapel'), exist_ok=True)
+    sistinechapel_repo = os.environ.get('SISTINE_REPO', "https://github.com/comfyanonymous/ComfyUI.git")
+    #sistinechapel_commit = os.environ.get('SISTINE_REPO_COMMIT_HASH', "5ab7f213bec2f816f9c5644becb32eb72c8ffb89")
     clone(sistinechapel_repo, d('sistinechapel'))
 
+# set environment variables controling the behavior of various libraries
+def set_environment():
+    log.info('Setting environment tuning')
+    os.environ.setdefault('TF_CPP_MIN_LOG_LEVEL', '2')
+    os.environ.setdefault('ACCELERATE', 'True')
+    os.environ.setdefault('FORCE_CUDA', '1')
+    os.environ.setdefault('ATTN_PRECISION', 'fp16')
+    os.environ.setdefault('PYTORCH_CUDA_ALLOC_CONF', 'garbage_collection_threshold:0.8,max_split_size_mb:512')
+    os.environ.setdefault('CUDA_LAUNCH_BLOCKING', '0')
+    os.environ.setdefault('CUDA_CACHE_DISABLE', '0')
+    os.environ.setdefault('CUDA_AUTO_BOOST', '1')
+    os.environ.setdefault('CUDA_MODULE_LOADING', 'LAZY')
+    os.environ.setdefault('CUDA_DEVICE_DEFAULT_PERSISTING_L2_CACHE_PERCENTAGE_LIMIT', '0')
+    os.environ.setdefault('GRADIO_ANALYTICS_ENABLED', 'False')
+    os.environ.setdefault('SAFETENSORS_FAST_GPU', '1')
+    os.environ.setdefault('NUMEXPR_MAX_THREADS', '16')
+    os.environ.setdefault('PYTHONHTTPSVERIFY', '0')
+    os.environ.setdefault('HF_HUB_DISABLE_TELEMETRY', '1')   
 
 def run_setup():
+    set_environment()
     install_repositories()
 
 if __name__ == "__main__":
