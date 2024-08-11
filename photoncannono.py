@@ -73,8 +73,8 @@ def install_repositories():
     def d(name):
         return os.path.join(os.path.dirname(__file__), 'photon', name)
     log.info('Installing photon cannon')
-    os.makedirs(os.path.join(os.path.dirname(__file__), 'sistine'), exist_ok=True)
-    chapel_repo = os.environ.get('photon_REPO', "https://github.com/lllyasviel/stable-diffusion-webui-forge.git")
+    os.makedirs(os.path.join(os.path.dirname(__file__), 'photon'), exist_ok=True)
+    chapel_repo = os.environ.get('PHOTON_REPO', "https://github.com/lllyasviel/stable-diffusion-webui-forge.git")
     #sistinechapel_commit = os.environ.get('CHAPEL_REPO_REPO_COMMIT_HASH', "5ab7f213bec2f816f9c5644becb32eb72c8ffb89")
     clone(chapel_repo, d('cannon'))
 
